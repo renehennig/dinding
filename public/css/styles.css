@@ -1,23 +1,55 @@
 body {background-color: #EF7123;}
 
 .tweet-list {
-	overflow: hidden;
-	list-style-type: none;
+    overflow: hidden;
+    list-style-type: none;
 }
 .tweet-list li {
-	float: left;
-	width: 200px;
-	margin-right: 10px;
+    float: left;
+    width: 200px;
+    margin: 10px;
+    position: relative;
 }
 .tweet-list .tweet-content{
-	background: white;
-	padding: 10px;
-	height: 120px;
+    background: white;
+    padding: 10px;
+    height: 120px;
+    border: 2px solid #666666;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-box-shadow: 0 0 5px #888888;
+    -webkit-box-shadow: 0 0 5px #888888;
 }
+
 .tweet-list .tweet-author{
-	overflow: hidden;
-	margin: 10px 20px 10px 0;
+    overflow: hidden;
+    margin: 10px 20px 10px 0;
 }
+
+.tweet-list .tweet-author:before {
+    content: "";
+    border-color: #666666 transparent transparent transparent;
+    border-style: solid;
+    border-width: 10px;
+    height: 0;
+    width: 0;
+    position: absolute;
+    bottom: 50px;
+    left: 30px;
+}
+
+.tweet-list .tweet-author:after{
+    content: "";
+    border-color: #fff transparent transparent transparent;
+    border-style: solid;
+    border-width: 10px;
+    height: 0;
+    width: 0;
+    position: absolute;
+    bottom: 53px;
+    left: 30px;
+}
+
 .tweet-list .tweet-author img{
-float: left;
+    float: left;
 }
