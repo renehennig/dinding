@@ -30,12 +30,18 @@
 			if (data.text) replacedText = data.text;
 			if (!data.user) return;
 
-			$('<li></li>').html('<div class="tweet-content">'+ data.text 
-				+ '</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="'
-				+ data.user.profile_image_url + '" /><span>[' 
-				+ data.user.screen_name + '</span></div>')
+			data.text = strdecode(data.text);
+
+			$('<li></li>').html('<div class="tweet-content">'+ data.text +
+				'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
+				data.user.profile_image_url + '" /><span>' +
+				data.user.screen_name + '</span></div>')
 			.prependTo('#dinding')
 			.css({opacity: 0}).slideDown('slow').animate({opacity: 1}, 'slow');
+
+			$($('#dinding li')[16]).remove();
+
+			//console.log($('#dinding li').length);
 		});
 
 		dinding.socket.on('connect', function() {
@@ -60,5 +66,9 @@
 	});
 
 	return dinding;
+
+	function strdecode( data ) {
+		return JSON.parse( decodeURIComponent( escape ( data ) ) );
+	}
 
 }).call(this);
