@@ -1,0 +1,23 @@
+body {background-color: #EF7123;}
+
+.tweet-list {
+	overflow: hidden;
+	list-style-type: none;
+}
+.tweet-list li {
+	float: left;
+	width: 200px;
+	margin-right: 10px;
+}
+.tweet-list .tweet-content{
+	background: white;
+	padding: 10px;
+	height: 120px;
+}
+.tweet-list .tweet-author{
+	overflow: hidden;
+	margin: 10px 20px 10px 0;
+}
+.tweet-list .tweet-author img{
+float: left;
+}
