@@ -8,14 +8,15 @@
 		express = require('express');
 		twitter = require('ntwitter');
 		io = require('socket.io');
+		config = require('./config.js');
 
 		app = express.createServer();
 
 		twitter = new twitter({
-			consumer_key: '',
-			consumer_secret: '',
-			access_token_key: '',
-			access_token_secret: ''
+			consumer_key: config.consumer_key,
+			consumer_secret: config.consumer_secret,
+			access_token_key: config.access_token_key,
+			access_token_secret: config.access_token_secret
 		});
 
 		app.configure(function() {
