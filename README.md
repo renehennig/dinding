@@ -13,7 +13,7 @@ setup
 
 	git clone https://github.com/renehennig/dinding.git
 	cd dinding
-	echo " exports.consumer_key = 'yourkeys'; exports.consumer_secret = 'yourkeys'; exports.access_token_key = 'yourkeys'; exports.access_token_secret = 'yourkeys';" > config.js
+	echo "exports.consumer_key = 'yourkeys'; exports.consumer_secret = 'yourkeys'; exports.access_token_key = 'yourkeys'; exports.access_token_secret = 'yourkeys'; exports.hashtags = ['#hashtag'];" > config.js
 
 
 start
