@@ -7,7 +7,7 @@ body {background-color: #EF7123;}
 .tweet-list li {
     float: left;
     width: 200px;
-    margin: 10px;
+    margin: 10px 10px 0;
     position: relative;
 }
 .tweet-list .tweet-content{
