@@ -1,4 +1,4 @@
-dinding
+dinding [Indonesian: wall]
 =======
 
 Hello! I'm a twitter wall!
