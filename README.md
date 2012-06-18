@@ -3,6 +3,11 @@ dinding
 
 Hello! I'm a twitter wall!
 
+info
+=====
+version 0.0.1
+alphaware. expect some bugs!
+
 
 setup
 =====
@@ -13,8 +18,11 @@ setup
 
 	git clone https://github.com/renehennig/dinding.git
 	cd dinding
-	echo "exports.consumer_key = 'yourkeys'; exports.consumer_secret = 'yourkeys'; exports.access_token_key = 'yourkeys'; exports.access_token_secret = 'yourkeys'; exports.hashtags = ['#hashtag'];" > config.js
-
+	
+	go to https://dev.twitter.com and register a new app
+	jump to "oauth" tool and copy and paste all keys in your "config.json"
+	
+	you have to add your hashtags in the config.json too.
 
 start
 =====
