@@ -1,124 +1,152 @@
 (function() {
 
-	var app, express, twitter, io, socket, fs, search,
-	hashtags = [], tweetdata, count, config, logger, whitelist;
+	var fs, express, twitter, io, config,
+	dinding, socket, _stream_,
+	count, tweetdata, streamStatus, destroy;
 
 	fs = require('fs');
 	express = require('express');
 	twitter = require('ntwitter');
 	io = require('socket.io');
-	config = require('./config.js');
+	config = require('./config.json');
 
-	hashtags = config.hashtags;
 
-	function loadFile(fname) {
-		fs.readFile(fname + '.json', 'ascii', function(err, data) {
-			if (!err && data) {
+	// Config filewatcher.
+	// For whitelist, blacklist or hashtag changes
+	// while using
+	/*fs.watchFile('./config.json', function(curr, prev) {
+		if (curr.size != prev.size) {
+			fs.readFile('./config.json', 'ascii', function(err, data) {
 				try {
-					fname = JSON.parse(data);
+					config = JSON.parse(data);
+					console.log('___ DESTROING STREAM DUE RELOAD HASHTAGS ___');
+					//_stream_.destroy();
+					destroy = true;
 				} catch (e) {
-					console.log('Your "' + fname + '.json" file has no valid JSON!!');
+					console.log('An error ... ', e);
 				}
-			}
-		});
-	}
-
-	setInterval(function() {
-		loadFile('whitelist');
-	}, 1000);
-
-	app = express.createServer();
-
-	twitter = new twitter({
-		consumer_key: config.consumer_key,
-		consumer_secret: config.consumer_secret,
-		access_token_key: config.access_token_key,
-		access_token_secret: config.access_token_secret
-	});
-
-	app.configure(function() {
-		app.use(express['static'](__dirname + '/public'));
-		return app.use(app.router);
-	});
-
-	app.listen(1337);
-
-	socket = io.listen(app);
-	socket.set('log level', 1);
-
-	socket.on('connection', function(socket) {
-		/*socket.on('data', function(action, data) {
-			
-			if (action === 'addHashTag') {
-				hashtags.push(data);
-			} else {
-				if (hashtags.indexOf(data) !== -1) {
-					hashtags.splice(hashtags.indexOf(data), 1);
-				}
-			}
-		});*/
-
-		socket.on('gethashtags', function() {
-			socket.emit('hashtags', hashtags);
-		});
-
-		if (hashtags.length > 0) {
-
-			/*twitter.search('#node', {}, function(err, data) {
-
-				console.log(err);
-
-				data.text = strencode(data.text);
-				socket.emit('tweet', JSON.stringify(data));
-			});*/
-
-			twitter.stream('statuses/filter', {track: hashtags}, function(stream) {
-
-				stream.on('data', function(data) {
-
-					if (!data || !data.text) return;
-
-					hashtags.forEach(function(str) {
-						tweetdata = null, count = 0;
-
-						for (x = 0; x < hashtags.length; x++) {
-							if (data.text.indexOf(hashtags[x]) === -1) {
-								count++;
-							}
-						}
-
-						if (count === 3) return;
-
-						search = new RegExp(str, 'gim');
-						data.text = data.text.replace(search, '<span class="label label-success">' + str + '</span>');
-						tweetdata = data;
-					});
-					
-					if (tweetdata) {
-						socket.emit('tweet', JSON.stringify(tweetdata));
-					}
-				});
-
-				stream.on('end', function (response) {
-					console.log('STREAM END', arguments);
-					socket.emit('streamEnd');
-					stream.destroySilent();
-				});
-
-				stream.on('destroy', function (response) {
-					console.log('STREAM DESTROY', arguments);
-					socket.emit('destroyed');
-					stream.destroySilent();
-				});
-
 			});
+		}
+	});*/
+
+
+	// Server and server config
+	dinding = express.createServer();
+
+	dinding.configure(function() {
+		dinding.use(express['static'](__dirname + '/public'));
+		return dinding.use(dinding.router);
+	});
+
+	dinding.listen(1337);
+
+
+
+	// Twitter config
+	twitter = new twitter({
+		consumer_key: config.twitter.consumer_key,
+		consumer_secret: config.twitter.consumer_secret,
+		access_token_key: config.twitter.access_token_key,
+		access_token_secret: config.twitter.access_token_secret
+	});
+
+	twitter.verifyCredentials(function (err, data) {
+		if (err) {
+			console.log('Twitter credentials not valid!!');
 		}
 	});
 
-	app.get('/', function(req, res) {
-		res.render('index.html');
+
+
+
+
+
+
+
+
+	// socket.io
+	socket = io.listen(dinding);
+	socket.set('log level', 2);
+
+	socket.on('error', function() {
+		console.log('socket error => ');
 	});
 
-	console.log('"dinding" is running at http://localhost:1337/');
-	
+
+	socket.on('connection', function(socket) {
+		console.log('socket connected');
+		twitterStream(socket);
+		sendHashTags(socket);
+	});
+
+
+	socket.on('end', function() {
+		console.log('socket, transport end');
+	});
+
+
+
+
+
+	function sendHashTags(_socket) {
+		_socket.emit('hashtags', config.dinding.hashtags);
+	}
+
+	function twitterStream(_socket) {
+		if (streamStatus) return;
+
+		console.log('___ TWITTERSTREAM STARTED ___', config.dinding.hashtags);
+		//sendHashTags(_socket);
+
+		twitter.stream('statuses/filter', {track: config.dinding.hashtags}, function(stream) {
+
+			streamStatus = true;
+			_stream_ = stream;
+
+			stream.on('error', function() {
+				console.log('_ stream error', arguments);
+			});
+
+			stream.on('data', function(data) {
+
+				if (destroy) {
+					stream.destroy();
+					_socket.destroy();
+					destroy = false;
+				}
+				
+				config.dinding.hashtags.forEach(function(str) {
+					tweetdata = null, count = 0;
+
+					for (x = 0; x < config.dinding.hashtags.length; x++) {
+						if (data.text.indexOf(config.dinding.hashtags[x]) === -1) {
+							count++;
+						}
+					}
+
+					if (count === config.dinding.hashtags.length) {
+						return;
+					}
+
+					search = new RegExp(str, 'gim');
+					data.text = data.text.replace(search, '<span class="label label-success">' + str + '</span>');
+					tweetdata = data;
+				});
+
+				if (tweetdata) {
+					_socket.broadcast.emit('tweet', tweetdata);
+				}
+			});
+
+
+
+
+			stream.on('destroy', function() {
+				console.log('SELF DESTROY!!!');
+				streamStatus = null;
+			});
+
+		});
+	}
+
 }).call(this);
