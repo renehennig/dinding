@@ -40,8 +40,6 @@
 
 	dinding.listen(1337);
 
-
-
 	// Twitter config
 	twitter = new twitter({
 		consumer_key: config.twitter.consumer_key,
@@ -56,14 +54,6 @@
 		}
 	});
 
-
-
-
-
-
-
-
-
 	// socket.io
 	socket = io.listen(dinding);
 	socket.set('log level', 2);
@@ -72,20 +62,15 @@
 		console.log('socket error => ');
 	});
 
-
 	socket.on('connection', function(socket) {
 		console.log('socket connected');
 		twitterStream(socket);
 		sendHashTags(socket);
 	});
 
-
 	socket.on('end', function() {
 		console.log('socket, transport end');
 	});
-
-
-
 
 
 	function sendHashTags(_socket) {
@@ -137,9 +122,6 @@
 					_socket.broadcast.emit('tweet', tweetdata);
 				}
 			});
-
-
-
 
 			stream.on('destroy', function() {
 				console.log('SELF DESTROY!!!');
