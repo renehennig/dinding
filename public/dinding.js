@@ -3,24 +3,7 @@
 	if (window.dinding === null) window.dinding = {};
 
 	dinding = {
-
-		socket: io.connect(),
-
-		addTag: function(data) {
-			dinding.socket.emit('data', 'addHashTag', $('#data').attr('value'));
-			dinding.socket.disconnect();
-			dinding.socket.socket.reconnect();
-
-			$('#addSuccess').show();
-			$('#addSuccess').css({opacity: 1});
-
-			setTimeout(function() {
-				$('#addSuccess').animate({opacity: 0}, 'slow');
-			}, 800);
-			setTimeout(function() {
-				$('#addSuccess').hide();
-			}, 1200);
-		}
+		socket: io.connect()
 	};
 
 	$(document).ready(function() {
@@ -30,30 +13,39 @@
 			if (data.text) replacedText = data.text;
 			if (!data.user) return;
 
-			data.text = strdecode(data.text);
-			$('<li></li>').html('<div class="tweet-content">'+ data.text 
-				+ '</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="'
-				+ data.user.profile_image_url + '" /><span>' 
-				+ data.user.screen_name + '</span></div>')
+			$('<li></li>').html('<div class="tweet-content">'+ data.text +
+				'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
+				data.user.profile_image_url + '" /><span>' +
+				data.user.screen_name + '</span></div>')
 			.prependTo('#dinding')
 			.css({opacity: 0}).slideDown('slow').animate({opacity: 1}, 'slow');
 
-			$($('#dinding li')[16]).remove();
+			$($('#dinding li')[20]).remove();
 
-			//console.log($('#dinding li').length);
 		});
 
 		dinding.socket.on('connect', function() {
+			console.log('### CONNECTION LOST - RECONNECT');
 			dinding.socket.emit('gethashtags', {});
 		});
 
 		dinding.socket.on('hashtags', function(data) {
-			dinding.hastags = data;
-			$('#tracker').empty();
+			dinding.hashtags = data;
+			$('.nav').empty();
 
 			data.forEach(function(str) {
-				$('<div class="alert alert-block alert-error fade in"><a class="close" data-dismiss="alert" id="'+str+'" href="#">&times;</a><p>' + str + '</p></div>').prependTo('#tracker');
+				$('<li><a>' + str + '</a></li>').prependTo('.nav');
 			});
+		});
+
+		dinding.socket.on('destroyed', function() {
+			console.log('##### RECONNECT destroyed #####');
+			dinding.socket.socket.reconnect();
+		});
+
+		dinding.socket.on('streamEnd', function() {
+			console.log('##### RECONNECT streamEnd #####');
+			dinding.socket.socket.reconnect();
 		});
 
 		$('#tracker').delegate('a', 'click', function() {
@@ -65,9 +57,5 @@
 	});
 
 	return dinding;
-
-	function strdecode( data ) {
-		return JSON.parse( decodeURIComponent( escape ( data ) ) );
-	}
 
 }).call(this);

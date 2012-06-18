@@ -1,7 +1,7 @@
 (function() {
 
 	var app, express, twitter, io, socket, fs, search,
-	hashtags = [], tweetdata, count, config, whitelist;
+	hashtags = [], tweetdata, count, config, logger, whitelist;
 
 	fs = require('fs');
 	express = require('express');
@@ -9,20 +9,22 @@
 	io = require('socket.io');
 	config = require('./config.js');
 
-	setInterval(function() {
-		fs.readFile('whitelist.json', 'ascii', function(err, data) {
-			if (err) {
-				//
-			} else {
-				if (data) {
-					try {
-						whitelist = JSON.parse(data);
-					} catch (e) {
-						console.log('Your "whitelist.json" file has no valid JSON!!');
-					}
+	hashtags = config.hashtags;
+
+	function loadFile(fname) {
+		fs.readFile(fname + '.json', 'ascii', function(err, data) {
+			if (!err && data) {
+				try {
+					fname = JSON.parse(data);
+				} catch (e) {
+					console.log('Your "' + fname + '.json" file has no valid JSON!!');
 				}
 			}
 		});
+	}
+
+	setInterval(function() {
+		loadFile('whitelist');
 	}, 1000);
 
 	app = express.createServer();
@@ -45,7 +47,7 @@
 	socket.set('log level', 1);
 
 	socket.on('connection', function(socket) {
-		socket.on('data', function(action, data) {
+		/*socket.on('data', function(action, data) {
 			
 			if (action === 'addHashTag') {
 				hashtags.push(data);
@@ -54,13 +56,22 @@
 					hashtags.splice(hashtags.indexOf(data), 1);
 				}
 			}
-		});
+		});*/
 
 		socket.on('gethashtags', function() {
 			socket.emit('hashtags', hashtags);
 		});
 
 		if (hashtags.length > 0) {
+
+			/*twitter.search('#node', {}, function(err, data) {
+
+				console.log(err);
+
+				data.text = strencode(data.text);
+				socket.emit('tweet', JSON.stringify(data));
+			});*/
+
 			twitter.stream('statuses/filter', {track: hashtags}, function(stream) {
 
 				stream.on('data', function(data) {
@@ -68,8 +79,7 @@
 					if (!data || !data.text) return;
 
 					hashtags.forEach(function(str) {
-						tweetdata = null;
-						count = 0;
+						tweetdata = null, count = 0;
 
 						for (x = 0; x < hashtags.length; x++) {
 							if (data.text.indexOf(hashtags[x]) === -1) {
@@ -81,50 +91,34 @@
 
 						search = new RegExp(str, 'gim');
 						data.text = data.text.replace(search, '<span class="label label-success">' + str + '</span>');
-						data.text = strencode(data.text);
 						tweetdata = data;
 					});
 					
-					if (tweetdata) socket.emit('tweet', JSON.stringify(tweetdata));
+					if (tweetdata) {
+						socket.emit('tweet', JSON.stringify(tweetdata));
+					}
 				});
-
 
 				stream.on('end', function (response) {
 					console.log('STREAM END', arguments);
-					// Handle a disconnection
-					socket.disconnect();
-					socket.socket.reconnect();
+					socket.emit('streamEnd');
+					stream.destroySilent();
 				});
 
 				stream.on('destroy', function (response) {
 					console.log('STREAM DESTROY', arguments);
-					socket.disconnect();
-					socket.socket.reconnect();
-					// Handle a 'silent' disconnection from Twitter, no end/error event fired
+					socket.emit('destroyed');
+					stream.destroySilent();
 				});
-
-				//setTimeout(stream.destroy, 5000);
-
 
 			});
 		}
 	});
 
 	app.get('/', function(req, res) {
-		console.log('query', req.query);
-		console.log('params', req.params);
 		res.render('index.html');
 	});
 
 	console.log('"dinding" is running at http://localhost:1337/');
-
-
-	function strencode( data ) {
-		return unescape( encodeURIComponent( JSON.stringify( data ) ) );
-	}
-
-	function strdecode( data ) {
-		return JSON.parse( decodeURIComponent( escape ( data ) ) );
-	}
 	
 }).call(this);
