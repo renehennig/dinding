@@ -58,6 +58,6 @@ body {background-color: #EF7123;}
     margin-right: 10px;
 }
 
-.tweet-list .tweet-author span{
+.tweet-list .tweet-author a{
     font-weight: bold;
 }
