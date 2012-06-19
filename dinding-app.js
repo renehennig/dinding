@@ -40,6 +40,8 @@
 
 	dinding.listen(1337);
 
+
+
 	// Twitter config
 	twitter = new twitter({
 		consumer_key: config.twitter.consumer_key,
@@ -54,6 +56,14 @@
 		}
 	});
 
+
+
+
+
+
+
+
+
 	// socket.io
 	socket = io.listen(dinding);
 	socket.set('log level', 2);
@@ -62,24 +72,21 @@
 		console.log('socket error => ');
 	});
 
+
 	socket.on('connection', function(socket) {
 		console.log('socket connected');
 		twitterSearch(socket, config.dinding.hashtags[0]);
 		sendHashTags(socket);
 	});
 
-<<<<<<< HEAD
 	
 
 
-=======
->>>>>>> 2cb1190cb0b69660b76a2553757289f1468a9a60
 	socket.on('end', function() {
 		console.log('socket, transport end');
 	});
 
 
-<<<<<<< HEAD
 	/*
 	var regTag = new RegExp(/[#]+[A-Za-z0-9\-_]/, 'gim');
 					data.text = data.text.replace(regTag, function(tag) {
@@ -113,8 +120,6 @@
 
 
 
-=======
->>>>>>> 2cb1190cb0b69660b76a2553757289f1468a9a60
 	function sendHashTags(_socket) {
 		_socket.emit('hashtags', config.dinding.hashtags);
 	}
@@ -193,6 +198,9 @@
 					_socket.broadcast.emit('tweet', tweetdata);
 				}
 			});
+
+
+
 
 			stream.on('destroy', function() {
 				console.log('SELF DESTROY!!!');
