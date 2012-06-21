@@ -96,7 +96,7 @@
 	function parseLinks(string) {
 		//from http://stackoverflow.com/questions/37684/how-to-replace-plain-urls-with-links
 		var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-    	return string.replace(exp,"<a target="_blank" href='$1'>$1</a>"); 
+    	return string.replace(exp,"<a target='_blank' href='$1'>$1</a>"); 
     }
 
 	function sendHashTags(_socket) {
