@@ -3,18 +3,17 @@
 	if (window.dinding === null) window.dinding = {};
 
 	dinding = {
-		version: '0.0.1',
-		//socket: io.connect(),
-		connected: 0
+		version: '0.0.1'
 	};
 
 	$(document).ready(function() {
 
 		dinding.socket = io.connect();
 
+		dinding.socket.socket.reconnect();
+
 		dinding.socket.on('connect', function() {
 			dinding.socket.emit('startStream');
-			//console.log('### connected', arguments);
 		});
 
 		// Get current hashtags
@@ -29,8 +28,6 @@
 		});
 
 		dinding.socket.on('tweet', function(data) {
-			console.log('INCOMING TWEET', arguments);
-
 			$('<li></li>').html('<div class="tweet-content">'+ data.text +
 				'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
 				data.user.profile_image_url + '" /><a target="_blank" href="http://twitter.com/' +
@@ -42,10 +39,7 @@
 			$($('#dinding li')[20]).remove();
 		});
 
-
 		dinding.socket.on('tweetSearch', function(data) {
-			console.log('INCOMING TWEET', arguments);
-
 			$('<li></li>').html('<div class="tweet-content">'+ data.text +
 				'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
 				data.profile_image_url + '" /><a target="_blank" href="http://twitter.com/' +
