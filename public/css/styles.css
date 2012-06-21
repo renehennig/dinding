@@ -7,7 +7,7 @@ body {background-color: #EF7123;}
 .tweet-list li {
     float: left;
     width: 200px;
-    margin: 10px 10px 0;
+    margin: 8px 8px 0;
     position: relative;
 }
 .tweet-list .tweet-content{
@@ -21,7 +21,6 @@ body {background-color: #EF7123;}
     -moz-box-shadow: 0 0 5px #BF1E2D;
     -webkit-box-shadow: 0 0 5px #BF1E2D;
     box-shadow: 0 0 5px #BF1E2D;
-
 }
 
 .tweet-list .tweet-author{
@@ -60,4 +59,14 @@ body {background-color: #EF7123;}
 
 .tweet-list .tweet-author a{
     font-weight: bold;
+}
+
+.sponsorpanel {
+    background: url("http://www.barcamp-erfurt.de/images/sponsoren.png") no-repeat scroll center center white;
+    border-radius: 12px 12px 12px 12px;
+    height: 700px;
+    margin-left: 10px;
+    padding: 10px;
+    text-align: center;
+    min-width: 270px;
 }
