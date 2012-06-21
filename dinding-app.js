@@ -29,7 +29,6 @@
 		}
 	});*/
 
-
 	// Server and server config
 	dinding = express.createServer();
 
@@ -39,8 +38,6 @@
 	});
 
 	dinding.listen(1337);
-
-
 
 	// Twitter config
 	twitter = new twitter({
@@ -56,14 +53,6 @@
 		}
 	});
 
-
-
-
-
-
-
-
-
 	// socket.io
 	socket = io.listen(dinding);
 	socket.set('log level', 2);
@@ -72,20 +61,15 @@
 		console.log('socket error => ');
 	});
 
-
 	socket.on('connection', function(socket) {
 		console.log('socket connected');
 		twitterSearch(socket, config.dinding.hashtags[0]);
 		sendHashTags(socket);
 	});
 
-	
-
-
 	socket.on('end', function() {
 		console.log('socket, transport end');
 	});
-
 
 	/*
 	var regTag = new RegExp(/[#]+[A-Za-z0-9\-_]/, 'gim');
@@ -94,7 +78,6 @@
 					});
 
 	*/
-
 
 	function parseHashTags(string) {
 		return string.replace(/[#]+[A-Za-z0-9\-_]+/gim, function(tag) {
@@ -110,28 +93,24 @@
 		return string;
 	}
 
-	/*unction parseUrls(string) {
-		return string.replace(/[A-Za-z]+:\/\/[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_:%&~\?\/.=]+/gim, function(url) {
-			return url;
-		});
-	}*/
-
-
-
-
+	function parseLinks(string) {
+		//from http://stackoverflow.com/questions/37684/how-to-replace-plain-urls-with-links
+		var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    	return string.replace(exp,"<a target="_blank" href='$1'>$1</a>"); 
+    }
 
 	function sendHashTags(_socket) {
 		_socket.emit('hashtags', config.dinding.hashtags);
 	}
 
-
 	function twitterSearch(_socket, keyword) {
 		twitter.search(keyword, {}, function(err, data) {
 			for (var tweet in data.results) {
 				
-				data.results[tweet].text = parseLabel(data.results[tweet].text);
+//				data.results[tweet].text = parseLabel(data.results[tweet].text);
+				data.results[tweet].text = parseLinks(data.results[tweet].text);
 				data.results[tweet].text = parseHashTags(data.results[tweet].text);
-
+				
 				_socket.emit('tweetSearch', data.results[tweet]);
 			}
 		});
@@ -178,18 +157,15 @@
 	//				}*/
 	//
 					
-					data.text = parseLabel(data.text);
+//					data.text = parseLabel(data.text);
+
+					data.text = parseLinks(data.text);
 					data.text = parseHashTags(data.text);
 
 	//				search = new RegExp(str, 'gim');
 	//				data.text = data.text.replace(search, '<span class="label label-success">' + str + '</span>');
-
 					
-
-
-
-					
-	//				//data.text = parseUrls(data.text);
+	//				data.text = parseUrls(data.text);
 
 					tweetdata = data;
 	//			});
@@ -198,9 +174,6 @@
 					_socket.broadcast.emit('tweet', tweetdata);
 				}
 			});
-
-
-
 
 			stream.on('destroy', function() {
 				console.log('SELF DESTROY!!!');
