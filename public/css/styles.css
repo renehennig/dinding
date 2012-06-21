@@ -3,11 +3,13 @@ body {background-color: #EF7123;}
 .tweet-list {
     overflow: hidden;
     list-style-type: none;
+    margin-left: 10px;
+    padding-left: 10px;
 }
 .tweet-list li {
     float: left;
     width: 200px;
-    margin: 8px 8px 0;
+    margin: 3px 7px 7px 3px;
     position: relative;
 }
 .tweet-list .tweet-content{
@@ -65,7 +67,7 @@ body {background-color: #EF7123;}
     background: url("http://www.barcamp-erfurt.de/images/sponsoren.png") no-repeat scroll center center white;
     border-radius: 12px 12px 12px 12px;
     height: 700px;
-    margin-left: 10px;
+    margin-left: 0;
     padding: 10px;
     text-align: center;
     min-width: 270px;
