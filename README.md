@@ -28,7 +28,7 @@ setup
 start
 =====
 	
-	node dinding-app.js
+	node dinding-server.js
 		
 usage
 =====

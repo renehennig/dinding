@@ -1,0 +1,14 @@
+{
+	"twitter": {
+		"consumer_key": "",
+		"consumer_secret": "",
+		"access_token_key": "",
+		"access_token_secret": ""
+		},
+	"dinding": {
+		"hashtags": ["#em", "#euro", "#euro2012"],
+		"user_whitelist": [],
+		"user_blacklist": [],
+		"port": 1337
+	}
+}
