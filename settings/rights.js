@@ -14,17 +14,6 @@
 	stream = function(data) {
 		if (!data.username) return data;
 		if (!data.userid) return data;
-		
-		//if (!data.description) return data;
-
-		if (!data.followerscount) return data;
-		if (Number(data.followerscount) < 10) return data;
-
-		if (!data.friendscount) return data;
-		if (Number(data.friendscount) < 10) return data;
-
-		if (!data.created) return data;
-		if (new Date().getTime() - new Date(data.created).getTime < 604800) return data;
 
 		for (var white in config.dinding.user_whitelist) {
 			if (data.username === config.dinding.user_whitelist[white]) {
@@ -41,6 +30,17 @@
 				}
 			}
 		}
+		
+		//if (!data.description) return data;
+
+		if (!data.followerscount) return data;
+		if (Number(data.followerscount) < 10) return data;
+
+		if (!data.friendscount) return data;
+		if (Number(data.friendscount) < 10) return data;
+
+		if (!data.created) return data;
+		if (new Date().getTime() - new Date(data.created).getTime < 604800) return data;
 
 		data.tweetisok = true;
 		return data;
