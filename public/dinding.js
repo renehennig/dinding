@@ -2,6 +2,8 @@
 
 	if (window.dinding === null) window.dinding = {};
 
+	dinding = {};
+
 	dinding.socket = io.connect();
 	dinding.showTweets = 20;
 
