@@ -1,13 +1,13 @@
 {
 	"twitter": {
-		"consumer_key": "SgMNuEyJcElv62f5x6ERA",
-		"consumer_secret": "dPoP8LBJiavlkIPNFJzyHGrUIIICASj55HwINtM0",
-		"access_token_key": "55854375-cQyV2AhR2V9DexrIeTmgEMVhMuq9eF6GQXfatstqk",
-		"access_token_secret": "T1yJW4pXNmLPFdSX70HgSATreWvIhuVUbv4YKhLJCnI"
+		"consumer_key": "",
+		"consumer_secret": "",
+		"access_token_key": "",
+		"access_token_secret": ""
 		},
 	"dinding": {
 		"hashtags": ["#bcef", "#bcef12", "#bcef2012"],
-		"user_whitelist": ["cainvommars", "renehennig"],
+		"user_whitelist": [],
 		"user_blacklist": [],
 		"port": 1337
 	}
