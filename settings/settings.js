@@ -11,8 +11,8 @@
 
 		dinding.set('view options', {layout: false});
 
-		dinding.register('.html', {
-			compile: function(str, options){
+		dinding.engine('.html', function () {
+			compile: function bernd(str, options){
 				return function(locals){
 					return str;
 				};

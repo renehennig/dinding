@@ -1,7 +1,7 @@
 (function() {
 
 	var fs, express, twitter, io, config,
-	dinding, utils, rights, socket;
+	dinding, utils, rights, socket, http, server;
 
 	fs			= require('fs');
 	express	= require('express');
@@ -12,8 +12,10 @@
 	rights	= require('./settings/rights.js');
 
 	// init server
-	dinding = express.createServer();
+	dinding = express();
 
+    http = require('http');
+    server = http.createServer(dinding);
 	//
 	dinding.streamInitialized = false;
 
@@ -26,8 +28,9 @@
 	});
 
 	// ### SOCKET.IO ####
-	socket = io.listen(dinding);
-	socket.set('log level', 1);
+	//socket = io.listen(dinding);
+    socket = require('socket.io').listen(server),
+ 	socket.set('log level', 1);
 	socket.on('connection', function(sock) {
 
 		sock.on('beginTransmisson', function() {
@@ -113,7 +116,7 @@
 		}
 	};
 
-	dinding.listen(config.dinding.port);
+	server.listen(config.dinding.port);
 	console.log('Server started on port ' + config.dinding.port);
 
 }).call(this);
