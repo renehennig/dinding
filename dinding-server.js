@@ -24,7 +24,13 @@
 
 
 	dinding.get('/', function(req, res) {
-		res.render('index.html');
+		console.log('GET');
+
+		res.render('index', {
+			users: 'Foo'
+		});
+		//res.json({});
+		//res.render('index.html');
 	});
 
 	// ### SOCKET.IO ####
