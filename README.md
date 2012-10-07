@@ -16,15 +16,13 @@ betaware. expect some bugs!
 git clone https://github.com/renehennig/dinding.git
 cd dinding
 npm install
-```
-edit *config.json*
-==========
 
-```
+edit *config.json*
+
 node dinding-server.js
 ```
 
-usage
+open
 =====
 ```
 http://localhost:1337/
