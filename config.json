@@ -1,12 +1,12 @@
 {
 	"twitter": {
-		"consumer_key": "",
-		"consumer_secret": "",
-		"access_token_key": "",
-		"access_token_secret": ""
+		"consumer_key": "SgMNuEyJcElv62f5x6ERA",
+		"consumer_secret": "dPoP8LBJiavlkIPNFJzyHGrUIIICASj55HwINtM0",
+		"access_token_key": "55854375-6XwMCPuAEl48wDGwIgNE4zPqtNWbnfyKvuhY9TWIE",
+		"access_token_secret": "bz0o9mLsexlMNiYvNeDMrJeTlc5Z7MAiOdUzKv6COU"
 		},
 	"dinding": {
-		"hashtags": ["#bcef", "#bcef12", "#bcef2012"],
+		"hashtags": ["#apple"],
 		"user_whitelist": [],
 		"user_blacklist": [],
 		"port": 1337

@@ -1,0 +1,13 @@
+{
+  "name" : "dinding",
+  "version" : "0.2.1",
+  "description" : "node based Twitter wall",
+  "main" : "dinding-server.js",
+  "author" : "Rene Hennig <rene.hennig@my-united.net>",
+  "dependencies" : {
+    "express" : ">=3.0.0rc4",
+    "socket.io" : ">=0.9.10",
+    "ntwitter" : ">= 0.5.0",
+    "hbs" : ">=1.0.5"
+  }
+}
