@@ -8,10 +8,10 @@ var fs =      require('fs'),
     twitter = require('ntwitter'),
     io      = require('socket.io'),
     http    = require('http'),
-    config  = require('./config.json'),
-    utils   = require('./settings/utils.js'),
-    rights  = require('./settings/rights.js');
-    twit    = require('./settings/twitter.js')(twitter, config);
+    config  = require(__dirname + '/config.json'),
+    utils   = require(__dirname + '/settings/utils.js'),
+    rights  = require(__dirname + '/settings/rights.js')(config);
+    twit    = require(__dirname + '/settings/twitter.js')(twitter, config);
 
 // Init
 var dinding = express(),
@@ -58,9 +58,9 @@ dinding.twSearch = function(keyword, sock) {
       
       for (var tweet in data.results) {
         data.results[tweet].CHECK = rights.checkUser({
-          username	: data.results[tweet].from_user,
-          userid		: data.results[tweet].from_user_id,
-          tweetisok	: false
+          username  : data.results[tweet].from_user,
+          userid    : data.results[tweet].from_user_id,
+          tweetisok : false
         }, 'search');
 
         if (data.results[tweet].CHECK.tweetisok) {
@@ -86,13 +86,13 @@ dinding.twStream = function(sock) {
       stream.on('data', function(data) {
         if (data && data.text) {
           data.CHECK = rights.checkUser({
-            username			: data.user.screen_name,
-            userid				: data.user.id,
-            description		: data.user.description,
+            username      : data.user.screen_name,
+            userid        : data.user.id,
+            description   : data.user.description,
             followerscount: data.user.followers_count,
-            friendscount	: data.user.friends_count,
-            created				: data.user.created_at,
-            tweetisok			: false
+            friendscount  : data.user.friends_count,
+            created       : data.user.created_at,
+            tweetisok     : false
           });
 
           if (data.CHECK.tweetisok) {
