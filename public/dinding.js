@@ -7,6 +7,8 @@
 	dinding.socket = io.connect();
 	dinding.showTweets = 20;
 
+	dinding.tweetCount = 0;
+
 	dinding.socket.on('connect', function() {
 		console.log('K! Were connected now. Please start transmission!');
 		dinding.socket.emit('beginTransmisson');
@@ -24,6 +26,8 @@
 	});
 
 	dinding.socket.on('tweet', function(data) {
+		dinding.twCount();
+
 		$('<li></li>').html('<div class="tweet-content">'+ data.text +
 			'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
 			data.user.profile_image_url + '" /><a target="_blank" href="http://twitter.com/' +
@@ -36,6 +40,8 @@
 	});
 
 	dinding.socket.on('tweetSearch', function(data) {
+		dinding.twCount();
+
 		$('<li></li>').html('<div class="tweet-content">'+ data.text +
 			'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
 			data.profile_image_url + '" /><a target="_blank" href="http://twitter.com/' +
@@ -46,5 +52,10 @@
 
 		$($('#dinding li')[dinding.showTweets]).remove();
 	});
+
+	dinding.twCount = function() {
+		++dinding.tweetCount;
+		$('#twCount').html(dinding.tweetCount);
+	};
 
 }).call(this);
