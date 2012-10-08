@@ -8,6 +8,7 @@ var fs =      require('fs'),
     twitter = require('ntwitter'),
     io      = require('socket.io'),
     http    = require('http'),
+    openw   = require('open'),
     config  = require(__dirname + '/config.json'),
     utils   = require(__dirname + '/settings/utils.js'),
     rights  = require(__dirname + '/settings/rights.js')(config);
@@ -119,4 +120,5 @@ dinding.twStream = function(sock) {
 
 // Listen on port
 server.listen(config.dinding.port);
+openw('http://localhost:' + config.dinding.port);
 console.log('Server started on port ' + config.dinding.port);

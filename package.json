@@ -7,7 +7,8 @@
     "express": ">=3.0.0rc4",
     "socket.io": ">=0.9.10",
     "ntwitter": ">= 0.5.0",
-    "hbs": ">=1.0.5"
+    "hbs": ">=1.0.5",
+    "open": ">=0.0.2"
   },
   "scripts": {
     "start": "dinding-server.js"

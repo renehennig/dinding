@@ -9,6 +9,7 @@ module.exports = function(twitter, config) {
   twitter.verifyCredentials(function (err, data) {
     if (err) {
       console.log('Twitter credentials not valid!!');
+      throw 'Credentials error || Abort program';
     } else {
       console.log('Valid Twitter credentials!');
     }
