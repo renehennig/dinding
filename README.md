@@ -25,5 +25,5 @@ node dinding-server.js
 open
 =====
 ```
-http://localhost:1337/
+browser will open automatically
 ```
