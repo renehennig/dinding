@@ -15,16 +15,19 @@ var rights  = require(__dirname + '/settings/rights.js')(config);
 var twit    = require(__dirname + '/settings/twitter.js')(twitter, config);
 
 // Init
-var dinding = express(),
-    server  = http.createServer(dinding);
+var dinding = express();
+var server  = http.createServer(dinding);
 
 // Express settings
 dinding.configure(function() {
-  dinding.use(express['static'](__dirname + '/public'));
+  dinding.use(express.static(__dirname + '/public'));
   dinding.use(express.bodyParser());
   dinding.use(express.methodOverride());
   dinding.use(dinding.router);
-  dinding.set('view options', {layout: false});
+  dinding.set('view options', {
+    layout: 'layout'
+  });
+  dinding.set('views', __dirname + '/views');
   dinding.set('view engine', 'hbs');
 });
 
