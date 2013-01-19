@@ -3,16 +3,16 @@
  * Twitter Wall
  */
 
-var fs =      require('fs'),
-    express = require('express'),
-    twitter = require('ntwitter'),
-    io      = require('socket.io'),
-    http    = require('http'),
-    openw   = require('open'),
-    config  = require(__dirname + '/config.json'),
-    utils   = require(__dirname + '/settings/utils.js'),
-    rights  = require(__dirname + '/settings/rights.js')(config);
-    twit    = require(__dirname + '/settings/twitter.js')(twitter, config);
+var fs =      require('fs');
+var express = require('express');
+var twitter = require('ntwitter');
+var io      = require('socket.io');
+var http    = require('http');
+var openw   = require('open');
+var config  = require(__dirname + '/config.json');
+var utils   = require(__dirname + '/settings/utils.js');
+var rights  = require(__dirname + '/settings/rights.js')(config);
+var twit    = require(__dirname + '/settings/twitter.js')(twitter, config);
 
 // Init
 var dinding = express(),
