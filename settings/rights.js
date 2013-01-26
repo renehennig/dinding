@@ -11,16 +11,16 @@ module.exports = (function(config) {
       if (!data.username) return data;
       if (!data.userid) return data;
 
-      for (var white in config.dinding.user_whitelist) {
-        if (data.username === config.dinding.user_whitelist[white]) {
+      for (var white in config.app.user_whitelist) {
+        if (data.username === config.app.user_whitelist[white]) {
           data.tweetisok = true;
           return data;
         }
       }
 
       if (!data.tweetisok) {
-        for (var black in config.dinding.user_blacklist) {
-          if (data.username === config.dinding.user_blacklist[black]) {
+        for (var black in config.app.user_blacklist) {
+          if (data.username === config.app.user_blacklist[black]) {
             data.tweetisok = false;
             return data;
           }
@@ -41,8 +41,8 @@ module.exports = (function(config) {
     },
 
     search: function(data) {
-      for (var white in config.dinding.user_whitelist) {
-        if (data.username === config.dinding.user_whitelist[white]) {
+      for (var white in config.app.user_whitelist) {
+        if (data.username === config.app.user_whitelist[white]) {
           console.log(data.username + ' is WHITELISTED!!');
           data.tweetisok = true;
           return data;
@@ -50,8 +50,8 @@ module.exports = (function(config) {
       }
 
       if (!data.tweetisok) {
-        for (var black in config.dinding.user_blacklist) {
-          if (data.username === config.dinding.user_blacklist[black]) {
+        for (var black in config.app.user_blacklist) {
+          if (data.username === config.app.user_blacklist[black]) {
             console.log(data.username + ' is BLACKLISTED!!');
             data.tweetisok = false;
             return data;

@@ -1,5 +1,5 @@
 /**
- * Node Server [dinding]
+ * Node Server [app]
  * Twitter Wall
  */
 
@@ -15,24 +15,24 @@ var rights  = require(__dirname + '/settings/rights.js')(config);
 var twit    = require(__dirname + '/settings/twitter.js')(twitter, config);
 
 // Init
-var dinding = express();
-var server  = http.createServer(dinding);
+var app = express();
+var server  = http.createServer(app);
 
 // Express settings
-dinding.configure(function() {
-  dinding.use(express.static(__dirname + '/public'));
-  dinding.use(express.bodyParser());
-  dinding.use(express.methodOverride());
-  dinding.use(dinding.router);
-  dinding.set('view options', {
+app.configure(function() {
+  app.use(express.static(__dirname + '/public'));
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
+  app.set('view options', {
     layout: 'layout'
   });
-  dinding.set('views', __dirname + '/views');
-  dinding.set('view engine', 'hbs');
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'hbs');
 });
 
 // Routes
-dinding.get('/', function(req, res) {
+app.get('/', function(req, res) {
   res.render('index');
 });
 
@@ -46,14 +46,14 @@ socket.on('connection', function(sock) {
     console.log('Ok! Got your request. Will send some data soon.');
 
     // First, send hashtag data
-    sock.emit('hashtags', config.dinding.hashtags);
+    sock.emit('hashtags', config.app.hashtags);
 
-    dinding.twSearch(config.dinding.hashtags, sock);
+    app.twSearch(config.app.hashtags, sock);
   });
 });
 
 // Functions used by twit
-dinding.twSearch = function(keyword, sock) {
+app.twSearch = function(keyword, sock) {
   console.log('## Search started ##', keyword);
 
   twit.search(keyword, {}, function(err, data) {
@@ -81,12 +81,12 @@ dinding.twSearch = function(keyword, sock) {
     }
   });
 
-  dinding.twStream(sock);
+  app.twStream(sock);
 };
 
-dinding.twStream = function(sock) {
-  if (!dinding.twitterInitialized) {
-    twit.stream('statuses/filter', {track: config.dinding.hashtags}, function(stream) {
+app.twStream = function(sock) {
+  if (!app.twitterInitialized) {
+    twit.stream('statuses/filter', {track: config.app.hashtags}, function(stream) {
       stream.on('data', function(data) {
         if (data && data.text) {
           data.CHECK = rights.checkUser({
@@ -122,6 +122,6 @@ dinding.twStream = function(sock) {
 };
 
 // Listen on port
-server.listen(config.dinding.port);
-openw('http://localhost:' + config.dinding.port);
-console.log('Server started on port ' + config.dinding.port);
+server.listen(config.app.port);
+openw('http://localhost:' + config.app.port);
+console.log('Server started on port ' + config.app.port);
