@@ -6,6 +6,7 @@
 var fs =      require('fs');
 var express = require('express');
 var twitter = require('ntwitter');
+var mtwitter = require('mtwitter');
 var io      = require('socket.io');
 var http    = require('http');
 var openw   = require('open');
@@ -13,6 +14,7 @@ var config  = require(__dirname + '/config.json');
 var utils   = require(__dirname + '/settings/utils.js');
 var rights  = require(__dirname + '/settings/rights.js')(config);
 var twit    = require(__dirname + '/settings/twitter.js')(twitter, config);
+var mtwit   = require(__dirname + '/settings/mtwitter.js')(mtwitter, config);
 
 // Init
 var app = express();
@@ -56,30 +58,34 @@ socket.on('connection', function(sock) {
 app.twSearch = function(keyword, sock) {
   console.log('## Search started ##', keyword);
 
-  twit.search(keyword, {}, function(err, data) {
-    if (!err && data && data.results) {
-      data.results = data.results.reverse();
-      
-      for (var tweet in data.results) {
-        data.results[tweet].CHECK = rights.checkUser({
-          username  : data.results[tweet].from_user,
-          userid    : data.results[tweet].from_user_id,
-          tweetisok : false
-        }, 'search');
+  for (var i = 0; i < config.app.hashtags.length; i++) {
 
-        if (data.results[tweet].CHECK.tweetisok) {
-          data.results[tweet].text = utils.parseHasTags(data.results[tweet].text);
-          data.results[tweet].text = utils.parseLinks(data.results[tweet].text);
-          sock.emit('tweetSearch', data.results[tweet]);
+      mtwit.get('search/tweets', {q: config.app.hashtags[i]}, function(err, data) {
+
+        if (!err && data && data.statuses) {
+          data.statuses = data.statuses.reverse();
+          for (var tweet in data.statuses) {
+            data.statuses[tweet].CHECK = rights.checkUser({
+              username  : data.statuses[tweet].from_user,
+              userid    : data.statuses[tweet].from_user_id,
+              tweetisok : false
+            }, 'search');
+
+            if (data.statuses[tweet].CHECK.tweetisok) {
+              data.statuses[tweet].text = utils.parseHasTags(data.statuses[tweet].text);
+              data.statuses[tweet].text = utils.parseLinks(data.statuses[tweet].text);
+              sock.emit('tweetSearch', data.statuses[tweet]);
+            } else {
+              console.log('!= ' + data.statuses[tweet].from_user + ' =! blocked!!');
+            }
+          }
+
         } else {
-          console.log('!= ' + data.results[tweet].from_user + ' =! blocked!!');
+          console.log("err", err);
         }
-      }
+    });
 
-    } else {
-      console.log(err);
-    }
-  });
+  }
 
   app.twStream(sock);
 };
@@ -123,5 +129,5 @@ app.twStream = function(sock) {
 
 // Listen on port
 server.listen(config.app.port);
-openw('http://localhost:' + config.app.port);
+// openw('http://localhost:' + config.app.port);
 console.log('Server started on port ' + config.app.port);
