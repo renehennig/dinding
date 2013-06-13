@@ -26,7 +26,7 @@
 	});
 
 	dinding.socket.on('tweet', function(data) {
-		dinding.twCount();
+		//dinding.twCount();
 
 		$('<li></li>').html('<div class="tweet-content">'+ data.text +
 			'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
@@ -40,7 +40,7 @@
 	});
 
 	dinding.socket.on('tweetSearch', function(data) {
-		dinding.twCount();
+		//dinding.twCount();
 
 		$('<li></li>').html('<div class="tweet-content">'+ data.text +
 			'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
