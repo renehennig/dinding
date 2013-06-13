@@ -44,9 +44,9 @@
 
 		$('<li></li>').html('<div class="tweet-content">'+ data.text +
 			'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
-			data.profile_image_url + '" /><a target="_blank" href="http://twitter.com/' +
-			data.from_user + '">' +
-			data.from_user + '</a></div>')
+			data.user.profile_image_url + '" /><a target="_blank" href="http://twitter.com/' +
+			data.user.screen_name + '">' +
+			data.user.screen_name + '</a></div>')
 		.prependTo('#dinding')
 		.css({opacity: 0}).slideDown('slow').animate({opacity: 1}, 'slow');
 
