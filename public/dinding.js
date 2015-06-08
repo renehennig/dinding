@@ -4,7 +4,17 @@
 
 	dinding = {};
 
-	dinding.socket = io.connect();
+	// var host = window.location.hostname;
+// console.log(host);
+// 	if(host == 'www.barcamp-erfurt.de') {
+// console.log('sub folder', 'http://'+ host);
+// 		dinding.socket = io.connect('http://' + host, {path: '/twitterwall/socket.io'});
+// 	}
+// 	else {
+// console.log('no subfolder');
+		dinding.socket = io.connect();
+	// }
+
 	dinding.showTweets = 20;
 
 	dinding.tweetCount = 0;
@@ -27,7 +37,7 @@
 
 	dinding.socket.on('tweet', function(data) {
 		//dinding.twCount();
-
+		console.log('new tweet');
 		$('<li></li>').html('<div class="tweet-content">'+ data.text +
 			'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
 			data.user.profile_image_url + '" /><a target="_blank" href="http://twitter.com/' +

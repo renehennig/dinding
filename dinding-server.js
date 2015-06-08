@@ -65,7 +65,7 @@ app.twSearch = function(keyword, sock) {
         mtwit.get('search/tweets', {q: config.app.hashtags[i]}, function(err, data) {
 
             if (!err && data && data.statuses) {
-                console.log('found ', data);
+                // console.log('found ', data);
                 data.statuses = data.statuses.reverse();
                 for (var tweet in data.statuses) {
                     data.statuses[tweet].CHECK = rights.checkUser({
@@ -114,6 +114,7 @@ app.twStream = function(sock) {
 
             // Send data to sender
             sock.emit('tweet', data);
+            console.log('ein tweet ein tweet!');
 
             // send data to all other clients exept sender
             sock.broadcast.emit('tweet', data);

@@ -1,4 +1,4 @@
-body {background-color: #EF7123;}
+body {background-color: #7a2541;}
 
 .tweet-list {
     overflow: hidden;
@@ -16,13 +16,9 @@ body {background-color: #EF7123;}
     background: white;
     padding: 10px;
     height: 130px;
-    border: 2px solid #BF1E2D;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    -moz-box-shadow: 0 0 5px #BF1E2D;
-    -webkit-box-shadow: 0 0 5px #BF1E2D;
-    box-shadow: 0 0 5px #BF1E2D;
 }
 
 .tweet-list .tweet-author{
@@ -32,7 +28,7 @@ body {background-color: #EF7123;}
 
 .tweet-list .tweet-author:before {
     content: "";
-    border-color: #BF1E2D transparent transparent transparent;
+    border-color: #ffffff transparent transparent transparent;
     border-style: solid;
     border-width: 10px;
     height: 0;
@@ -57,18 +53,30 @@ body {background-color: #EF7123;}
 .tweet-list .tweet-author img{
     float: left;
     margin-right: 10px;
+    border-radius: 24px;
 }
 
 .tweet-list .tweet-author a{
     font-weight: bold;
+    color: #999;
 }
 
 .sponsorpanel {
-    background: url("http://www.barcamp-erfurt.de/images/sponsoren.png") no-repeat scroll center center white;
+    display: none;
+}
+@media (min-width: 1222px) {
+.sponsorpanel {
+    display: block;
     border-radius: 12px 12px 12px 12px;
-    height: 700px;
     margin-left: 0;
     padding: 10px;
     text-align: center;
-    min-width: 270px;
+    width: 270px;
+    float: right;
+    background: white;
+}
+
+.sponsorpanel .stufe1 img {width: 80%;}
+.sponsorpanel .stufe2 img {width: 70%}
+.sponsorpanel .stufe3 img {width: 60%}
 }
