@@ -2,6 +2,7 @@
  * Node Server [app]
  * Twitter Wall
  */
+'use strict';
 
 var fs =      require('fs');
 var express = require('express');
@@ -20,22 +21,16 @@ var app = express();
 var server  = http.createServer(app);
 
 // Express settings
-app.configure(function() {
-    'use strict';
-    app.use(express.static(__dirname + '/public'));
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
-    app.use(app.router);
-    app.set('view options', {
+app
+    .use(express.static(__dirname + '/public'))
+    .set('view options', {
         layout: 'layout'
-    });
-    app.set('views', __dirname + '/views');
-    app.set('view engine', 'hbs');
-});
+    })
+    .set('views', __dirname + '/views')
+    .set('view engine', 'hbs');
 
 // Routes
 app.get('/', function(req, res) {
-    'use strict';
     res.render('index');
 });
 
@@ -45,7 +40,6 @@ var socket = require('socket.io').listen(server);
 // Socket settings
 socket.set('log level', 1);
 socket.on('connection', function(sock) {
-    'use strict';
     sock.on('beginTransmisson', function() {
         console.log('Ok! Got your request. Will send some data soon.');
 
@@ -58,7 +52,6 @@ socket.on('connection', function(sock) {
 
 // Functions used by twit
 app.twSearch = function(keyword, sock) {
-    'use strict';
     console.log('## Search started ##', keyword);
 
     for (var i = 0; i < config.app.hashtags.length; i++) {
@@ -133,5 +126,4 @@ app.twStream = function(sock) {
 
 // Listen on port
 server.listen(config.app.port);
-// openw('http://localhost:' + config.app.port);
 console.log('Server started on port ' + config.app.port);

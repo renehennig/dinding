@@ -4,11 +4,11 @@
   "main": "dinding-server.js",
   "author": "Rene Hennig <rene.hennig@my-united.net>",
   "dependencies": {
-    "express": ">=3.0.0rc4",
-    "socket.io": ">=0.9.10",
+    "express": "^4.12.4",
+    "hbs": "^3.0.1",
+    "mtwitter": "*",
     "ntwitter": ">= 0.5.0",
-    "hbs": ">=1.0.5",
-    "mtwitter": "*" 
+    "socket.io": "^1.3.5"
   },
   "scripts": {
     "start": "dinding-server.js"
