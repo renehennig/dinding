@@ -1,14 +1,18 @@
-body {background-color: #7a2541;}
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:400,600,300');
+
+body {background-color: #7a2541;
+font-family: 'Open Sans', sans-serif;
+  }
 
 .tweet-list {
     overflow: hidden;
     list-style-type: none;
-    margin-left: 10px;
-    padding-left: 10px;
+    margin-left: 0;
+    padding-left: 0;
 }
 .tweet-list li {
     float: left;
-    width: 200px;
+    width: 190px;
     margin: 3px 7px 7px 3px;
     position: relative;
 }
@@ -71,7 +75,7 @@ body {background-color: #7a2541;}
     margin-left: 0;
     padding: 10px;
     text-align: center;
-    width: 270px;
+    width: 200px;
     float: right;
     background: white;
 }
