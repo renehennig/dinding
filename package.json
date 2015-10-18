@@ -6,9 +6,8 @@
   "dependencies": {
     "express": "^4.12.4",
     "hbs": "^3.0.1",
-    "mtwitter": "*",
-    "ntwitter": ">= 0.5.0",
-    "socket.io": "^1.3.5"
+    "socket.io": "^1.3.5",
+    "twitter": "^1.2.5"
   },
   "scripts": {
     "start": "dinding-server.js"
