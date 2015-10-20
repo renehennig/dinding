@@ -1,7 +1,8 @@
 @import url('http://fonts.googleapis.com/css?family=Open+Sans:400,600,300');
 
-body {background-color: #7a2541;
-font-family: 'Open Sans', sans-serif;
+body {
+    background-color: black;
+    font-family: 'Open Sans', sans-serif;
   }
 
 .tweet-list {
@@ -19,10 +20,12 @@ font-family: 'Open Sans', sans-serif;
 .tweet-list .tweet-content{
     background: white;
     padding: 10px;
-    height: 130px;
+    height: 174px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
+    font-size: 14px;
+    line-height: 22px;
 }
 
 .tweet-list .tweet-author{
@@ -62,7 +65,7 @@ font-family: 'Open Sans', sans-serif;
 
 .tweet-list .tweet-author a{
     font-weight: bold;
-    color: #999;
+    color: white;
 }
 
 .sponsorpanel {
@@ -81,6 +84,6 @@ font-family: 'Open Sans', sans-serif;
 }
 
 .sponsorpanel .stufe1 img {width: 80%;}
-.sponsorpanel .stufe2 img {width: 70%}
-.sponsorpanel .stufe3 img {width: 60%}
-}
+.sponsorpanel .stufe2 img {width: 70%;}
+.sponsorpanel .stufe3 img {width: 60%;}
+.sponsorpanel. img {margin-bottom: 12px;}
