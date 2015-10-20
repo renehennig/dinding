@@ -72,18 +72,19 @@ body {
     display: none;
 }
 @media (min-width: 1222px) {
-.sponsorpanel {
-    display: block;
-    border-radius: 12px 12px 12px 12px;
-    margin-left: 0;
-    padding: 10px;
-    text-align: center;
-    width: 200px;
-    float: right;
-    background: white;
-}
+    .sponsorpanel {
+        display: block;
+        border-radius: 12px 12px 12px 12px;
+        margin-left: 0;
+        padding: 10px;
+        text-align: center;
+        width: 200px;
+        float: right;
+        background: white;
+    }
 
-.sponsorpanel .stufe1 img {width: 80%;}
-.sponsorpanel .stufe2 img {width: 70%;}
-.sponsorpanel .stufe3 img {width: 60%;}
-.sponsorpanel. img {margin-bottom: 12px;}
+    .sponsorpanel .stufe1 img {width: 80%;}
+    .sponsorpanel .stufe2 img {width: 70%;}
+    .sponsorpanel .stufe3 img {width: 60%;}
+    .sponsorpanel img {margin-bottom: 12px;}
+}
