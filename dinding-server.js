@@ -110,6 +110,10 @@ app.twStream = function(sock) {
 
           // Send data to sender
           sock.emit('tweet', data);
+          // console.log('ein tweet ein tweet!');
+
+          // send data to all other clients exept sender
+          sock.broadcast.emit('tweet', data);
 
         } else {
           console.log('!= ' + data.user.screen_name + ' =! blocked!!');

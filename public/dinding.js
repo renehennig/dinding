@@ -2,6 +2,8 @@
 
 	if (window.dinding === null) window.dinding = {};
 
+	var oldTweet;
+
 	dinding = {};
 
 	// var host = window.location.hostname;
@@ -52,13 +54,18 @@
 	dinding.socket.on('tweetSearch', function(data) {
 		//dinding.twCount();
 
-		$('<li></li>').html('<div class="tweet-content">'+ data.text +
-			'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
-			data.user.profile_image_url + '" /><a target="_blank" href="http://twitter.com/' +
-			data.user.screen_name + '">@' +
-			data.user.screen_name + '</a></div>')
-		.prependTo('#dinding')
-		.css({opacity: 0}).slideDown('slow').animate({opacity: 1}, 'slow');
+		if (oldTweet !== data.text) {
+			oldTweet = data.text;
+
+			$('<li></li>').html('<div class="tweet-content">'+ data.text +
+				'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
+				data.user.profile_image_url + '" /><a target="_blank" href="http://twitter.com/' +
+				data.user.screen_name + '">@' +
+				data.user.screen_name + '</a></div>')
+			.prependTo('#dinding')
+			.css({opacity: 0}).slideDown('slow').animate({opacity: 1}, 'slow');
+		}
+
 
 		$($('#dinding li')[dinding.showTweets]).remove();
 	});

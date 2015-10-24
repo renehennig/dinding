@@ -14,7 +14,7 @@ body {
 .tweet-list li {
     float: left;
     width: 190px;
-    margin: 3px 7px 7px 3px;
+    margin: 0 7px 10px 3px;
     position: relative;
 }
 .tweet-list .tweet-content{
@@ -71,14 +71,18 @@ body {
 .sponsorpanel {
     display: none;
 }
-@media (min-width: 1222px) {
+
+.container-fluid {
+    padding-right: 5px !important;
+}
+@media (min-width: 1022px) {
     .sponsorpanel {
         display: block;
-        border-radius: 12px 12px 12px 12px;
+        border-radius: 10px;
         margin-left: 0;
         padding: 10px;
         text-align: center;
-        width: 200px;
+        width: 163px;
         float: right;
         background: white;
     }
