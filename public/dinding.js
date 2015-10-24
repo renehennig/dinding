@@ -39,14 +39,17 @@
 
 	dinding.socket.on('tweet', function(data) {
 		//dinding.twCount();
-		console.log('new tweet');
-		$('<li></li>').html('<div class="tweet-content">'+ data.text +
-			'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
-			data.user.profile_image_url + '" /><a target="_blank" href="http://twitter.com/' +
-			data.user.screen_name + '">@' +
-			data.user.screen_name + '</a></div>')
-		.prependTo('#dinding')
-		.css({opacity: 0}).slideDown('slow').animate({opacity: 1}, 'slow');
+		console.log('new tweet',data.text);
+		if (oldTweet !== data.text) {
+			oldTweet = data.text;
+			$('<li></li>').html('<div class="tweet-content">'+ data.text +
+				'</div><div class="tweet-author"><img style="height: 48px; width: 48px;" src="' +
+				data.user.profile_image_url + '" /><a target="_blank" href="http://twitter.com/' +
+				data.user.screen_name + '">@' +
+				data.user.screen_name + '</a></div>')
+			.prependTo('#dinding')
+			.css({opacity: 0}).slideDown('slow').animate({opacity: 1}, 'slow');
+		}
 
 		$($('#dinding li')[dinding.showTweets]).remove();
 	});
